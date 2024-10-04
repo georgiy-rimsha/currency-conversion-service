@@ -1,0 +1,52 @@
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+cors:
+  allowed-origins: "http://localhost:3000"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
+csp:
+  api-url: http://localhost:8080
+
+currency-rate-provider:
+  swop:
+    api-key: 3174a2e638ebf865a167f335c1d6d6c385afe6d318094530b08bed81e41876ca
+
+management:
+  metrics:
+    export:
+      influx:
+        api-version: v2
+        batch-size: 10000
+        compressed: true
+        connect-timeout: 1s
+        enabled: true
+        num-threads: 2
+        read-timeout: 10s
+        step: 5s
+        bucket: currency
+        org: rimsha
+        token: 258cf857e7764ff9a910f66da58e0bf870fe70bdf7c1f00d6509e40ce759e1de
+        uri: http://localhost:8086
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+    endpoint:
+      metrics:
+        enabled: true
+      health:
+        enabled: true
+        show-details: ALWAYS
+      info:
+        enabled: true
+        show-details: ALWAYS
+

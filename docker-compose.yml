@@ -1,0 +1,57 @@
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.1.1
+    volumes:
+      - influxdb-storage:/var/lib/influxdb2:rw
+    env_file:
+      - .env
+    entrypoint: ["./entrypoint.sh"]
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_INFLUXDB_INIT_PORT}:8086
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-oss:8.4.3
+    volumes:
+      - grafana-storage:/var/lib/grafana:rw
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_DASHBOARDS_JSON_ENABLED=true
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    restart: unless-stopped
+    depends_on:
+      - influxdb
+    ports:
+      - ${GRAFANA_PORT}:3000
+
+  currency-conversion-api:
+    container_name: currency-conversion-api
+    image: notenger/currency-conversion-api
+    environment:
+      MANAGEMENT_METRICS_EXPORT_INFLUX_URI: http://influxdb:8086
+      CORS_ALLOWED_ORIGINS: http://localhost:3001
+      CSP_API_URL: http://localhost:8081
+    ports:
+      - 8081:8080
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+
+  currency-conversion-frontend:
+    container_name: currency-conversion-frontend
+    image: notenger/currency-conversion-frontend
+    build:
+      context: frontend
+      args:
+        api_base_url: http://localhost:8081
+    ports:
+      - 3001:3000
+    depends_on:
+      - currency-conversion-api
+    restart: unless-stopped
+
+volumes:
+  grafana-storage:
+  influxdb-storage:

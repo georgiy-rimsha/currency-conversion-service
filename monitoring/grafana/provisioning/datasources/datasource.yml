@@ -1,0 +1,29 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB_v2_Flux
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      version: Flux
+      organization: rimsha
+      defaultBucket: currency
+      tlsSkipVerify: true
+    secureJsonData:
+      token: 258cf857e7764ff9a910f66da58e0bf870fe70bdf7c1f00d6509e40ce759e1de
+
+  - name: InfluxDB_v2_InfluxQL
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      version: "1"
+      organization: rimsha
+      defaultBucket: currency
+      tlsSkipVerify: true
+    secureJsonData:
+      password: password123
+    basicAuth: true
+    basicAuthUser: admin
+    basicAuthPassword: password123
