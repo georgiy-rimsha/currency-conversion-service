@@ -77,7 +77,7 @@ Example:
 http://localhost:8081/api/v1/currencies
 ```
 Response:
-```json
+```
 [
   "AED",
   "AFN",
