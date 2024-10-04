@@ -18,15 +18,7 @@ public class SecurityFilterChainConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-//        requestHandler.setCsrfRequestAttributeName("_csrf");
-
         http
-                .csrf(
-                        csrf ->  {}
-//                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
-                )
                 .csrf(Customizer.withDefaults())
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .cors(Customizer.withDefaults())
