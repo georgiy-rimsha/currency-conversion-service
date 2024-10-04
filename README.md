@@ -1,6 +1,6 @@
 # Currency Conversion Service
 
-This project is a currency conversion service that includes currency conversion API, a React frontend, and monitoring through InfluxDB and Grafana. The service allows users to convert between different currencies using real-time exchange rates, provided by swop.cx service.
+This project is a currency conversion service that includes currency conversion API, a React frontend, and monitoring through InfluxDB and Grafana. The service allows users to convert between different currencies using real-time exchange rates, provided by [swop.cx](https://swop.cx).
 
 ## Prerequisites
 
